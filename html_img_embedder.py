@@ -13,6 +13,8 @@ def make_html_images_inline(html_content):
         img_src = unquote(img.attrs['src'])
 
         if not img_src.startswith('http'):
+            if not os.path.isabs(img_src):
+                img_src = os.path.abspath(img_src)
             with open(img_src, "rb") as image_file:
                 encoded_string = base64.b64encode(image_file.read())
         else:
